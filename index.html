@@ -9,7 +9,7 @@
     body {
       margin: 0;
       padding: 0;
-      background-color: #191E29; /* Swissborg Dark Charcoal */
+      background-color: #191E29; 
       color: #FFFFFF;
       font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
       overflow: hidden;
@@ -43,50 +43,50 @@
     h1 {
       font-size: 2.5rem;
       margin-bottom: 10px;
-      color: #00f2fe; /* Tech Cyan */
+      color: #00f2fe; 
     }
 
     .section p {
-      color: #696E79; /* Swissborg Slate Gray */
+      color: #696E79; 
       font-size: 1.1rem;
       text-align: center;
       max-width: 400px;
     }
 
-    /* Fixed Corner Container Frame */
+    /* Fixed Corner Container Frame - Scaled up base area */
     .fab-menu-wrapper {
       position: fixed;
       bottom: 40px;
       right: 40px;
-      width: 65px;
-      height: 65px;
+      width: 76px;
+      height: 76px;
       z-index: 1000;
     }
 
-    /* Main Toggle Trigger Button */
+    /* Main Toggle Trigger Button - Expanded for a more intentional anchor */
     .main-fab {
       position: absolute;
       bottom: 0;
       right: 0;
-      width: 65px;
-      height: 65px;
+      width: 76px;
+      height: 76px;
       border-radius: 50%;
-      background: #132D46; /* Deep Blue-Navy */
-      border: 2px solid #00f2fe;
+      background: #132D46; 
+      border: 2.5px solid #00f2fe;
       display: flex;
       justify-content: center;
       align-items: center;
       cursor: pointer;
-      box-shadow: 0 8px 32px rgba(0, 242, 254, 0.35);
+      box-shadow: 0 10px 36px rgba(0, 242, 254, 0.35);
       z-index: 1010;
       box-sizing: border-box;
     }
 
-    /* Diamond Central Icon */
+    /* Diamond Central Icon - Scaled to match the bigger button */
     .diamond-icon {
-      width: 14px;
-      height: 14px;
-      border: 2.5px solid #00f2fe;
+      width: 18px;
+      height: 18px;
+      border: 3px solid #00f2fe;
       transform: rotate(45deg);
       transition: transform 0.4s ease;
     }
@@ -95,15 +95,12 @@
       transform: rotate(135deg);
     }
 
-    /* Sub Navigation Item Wrappers 
-       Stacked precisely over the main trigger button origin.
-       Uses a column flexbox so the text always positions itself straight down below the circle.
-    */
+    /* Sub Navigation Item Wrappers - Centered over origin point */
     .menu-item {
       position: absolute;
       bottom: 7px; 
       right: 7px;
-      width: 50px;
+      width: 62px;
       display: flex;
       flex-direction: column;
       align-items: center;
@@ -114,15 +111,15 @@
       z-index: 1001;
     }
 
-    /* Circular Navigation Buttons */
+    /* Circular Navigation Buttons - Upscaled for premium touch layout */
     .sub-fab {
-      width: 50px;
-      height: 50px;
+      width: 62px;
+      height: 62px;
       border-radius: 50%;
       background-color: #132D46; /* Deep Blue-Navy */
-      border: 1px solid rgba(0, 242, 254, 0.5);
+      border: 1.5px solid rgba(0, 242, 254, 0.5);
       cursor: pointer;
-      box-shadow: 0 4px 14px rgba(0,0,0,0.4);
+      box-shadow: 0 6px 18px rgba(0,0,0,0.45);
       display: flex;
       justify-content: center;
       align-items: center;
@@ -133,49 +130,45 @@
 
     .sub-fab::after {
       content: '';
-      width: 8px;
-      height: 8px;
+      width: 10px;
+      height: 10px;
       border-radius: 50%;
       background-color: #00f2fe;
-      box-shadow: 0 0 8px #00f2fe;
+      box-shadow: 0 0 10px #00f2fe;
     }
 
-    /* Minimal Text Labels positioned directly below the circle button */
+    /* Minimal Text Labels - Set cleanly below the upscaled circles */
     .label {
-      font-size: 11px;
+      font-size: 12px;
       color: #FFFFFF; 
       font-weight: 700;
       text-transform: uppercase;
       letter-spacing: 0.08em;
       white-space: nowrap;
       pointer-events: none;
-      margin-top: 8px; /* Clean gap below the button footprint */
-      text-shadow: 0 2px 4px rgba(0, 0, 0, 0.8);
+      margin-top: 10px; /* Adjusted gap for the new scale */
+      text-shadow: 0 2px 5px rgba(0, 0, 0, 0.9);
     }
 
-    /* ==========================================================================
-       PERFECTLY SPACED GEOMETRIC BREAKOUT ARC
-       ========================================================================== */
-
-    /* Item 0: Positioned at the top of the arc layout */
+    /* Item 0: Symmetrical top position */
     .fab-menu-wrapper.active #item0 {
       opacity: 1;
       pointer-events: auto;
-      transform: translate(0px, -135px);
+      transform: translate(0px, -155px); /* Increased throw distance for larger icons */
     }
 
-    /* Item 1: Positioned symmetrically in the center corner of the arc */
+    /* Item 1: Symmetrical true diagonal corner position */
     .fab-menu-wrapper.active #item1 {
       opacity: 1;
       pointer-events: auto;
-      transform: translate(-95px, -95px);
+      transform: translate(-110px, -110px);
     }
 
-    /* Item 2: Positioned at the leftmost baseline of the arc layout */
+    /* Item 2: Symmetrical baseline left position */
     .fab-menu-wrapper.active #item2 {
       opacity: 1;
       pointer-events: auto;
-      transform: translate(-135px, 0px);
+      transform: translate(-155px, 0px);
     }
   </style>
 </head>
