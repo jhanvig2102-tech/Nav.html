@@ -5,17 +5,17 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Premium Portfolio</title>
   <style>
-    /* Reset & Base Styling */
+    /* Reset & Base Layout */
     body {
       margin: 0;
       padding: 0;
       background-color: #191E29; /* Swissborg Dark Charcoal */
-      color: #FFFFFF; /* Solid White text */
+      color: #FFFFFF;
       font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
       overflow: hidden;
     }
 
-    /* Content Sections Showcase */
+    /* Content Display Sections */
     .section {
       position: absolute;
       top: 0;
@@ -53,19 +53,21 @@
       max-width: 400px;
     }
 
-    /* Sketch Alignment: Navigation Container anchored low and tight */
-    .fab-container {
+    /* Sketch Corner Anchor: Keeps navigation perfectly fixed at the bottom right */
+    .fab-menu-wrapper {
       position: fixed;
-      bottom: 25px; /* Sits low on the screen */
-      right: 25px;
-      display: flex;
-      align-items: center; /* Aligns items perfectly with the main button */
-      gap: 16px;
+      bottom: 30px;
+      right: 30px;
+      width: 65px;
+      height: 65px;
       z-index: 1000;
     }
 
-    /* Main Action Trigger Button */
+    /* Main Toggle Trigger Button */
     .main-fab {
+      position: absolute;
+      top: 0;
+      left: 0;
       width: 65px;
       height: 65px;
       border-radius: 50%;
@@ -76,11 +78,11 @@
       align-items: center;
       cursor: pointer;
       box-shadow: 0 8px 32px rgba(0, 242, 254, 0.2);
-      transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-      order: 2; /* Ensures main button always stays on the far right */
+      z-index: 1010;
+      box-sizing: border-box;
     }
 
-    /* Diamond Icon inside button */
+    /* Diamond Central Icon */
     .diamond-icon {
       width: 14px;
       height: 14px;
@@ -89,58 +91,34 @@
       transition: transform 0.4s ease;
     }
 
-    .fab-container.active .main-fab {
-      transform: scale(1.05);
-    }
-
-    .fab-container.active .diamond-icon {
+    .fab-menu-wrapper.active .diamond-icon {
       transform: rotate(135deg);
     }
 
-    /* Menu options row branching out leftwards */
-    .menu-items {
+    /* Sub Navigation Option Wrapper Setup */
+    .menu-item {
+      position: absolute;
       display: flex;
-      flex-direction: row-reverse; /* Flows menu cards leftward away from button */
       align-items: center;
-      gap: 12px;
-      order: 1;
-    }
-
-    /* Staggered Wrapper configuration */
-    .menu-item-wrapper {
-      display: flex;
-      flex-direction: column; /* Stack label nicely underneath or above circles */
-      align-items: center;
-      gap: 6px;
       opacity: 0;
       pointer-events: none;
-      transform: translateX(20px) scale(0.85); /* Emerges smoothly from the right side */
-      transition: opacity 0.35s ease, transform 0.35s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+      transition: opacity 0.3s ease, transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+      z-index: 1001;
     }
 
-    /* Sequential Cascade Timing */
-    .fab-container.active .menu-items .menu-item-wrapper:nth-child(1) { transition-delay: 0.04s; }
-    .fab-container.active .menu-items .menu-item-wrapper:nth-child(2) { transition-delay: 0.10s; }
-    .fab-container.active .menu-items .menu-item-wrapper:nth-child(3) { transition-delay: 0.16s; }
-
-    .fab-container.active .menu-item-wrapper {
-      opacity: 1;
-      pointer-events: auto;
-      transform: translateX(0) scale(1);
-    }
-
-    /* Sub-menu Navigation Circular Buttons */
+    /* Circular Navigation Buttons */
     .sub-fab {
-      width: 48px;
-      height: 48px;
+      width: 50px;
+      height: 50px;
       border-radius: 50%;
-      background-color: #132D46; /* Matching context color maps */
-      border: 1px solid rgba(0, 242, 254, 0.3);
+      background-color: #132D46; /* Deep Blue-Navy */
+      border: 1px solid rgba(0, 242, 254, 0.4);
       cursor: pointer;
       box-shadow: 0 4px 14px rgba(0,0,0,0.4);
       display: flex;
       justify-content: center;
       align-items: center;
+      box-sizing: border-box;
     }
 
     .sub-fab::after {
@@ -152,14 +130,62 @@
       box-shadow: 0 0 8px #00f2fe;
     }
 
-    /* Minimal neat label style positioned clearly */
+    /* Minimal Floating Horizontal Text Labels */
     .label {
+      position: absolute;
+      right: 60px; /* Positions text neatly to the left side of its respective button */
       font-size: 11px;
       color: #696E79; /* Clean secondary slate color */
       font-weight: 700;
       text-transform: uppercase;
       letter-spacing: 0.05em;
       white-space: nowrap;
+      background: rgba(19, 45, 70, 0.9);
+      padding: 4px 10px;
+      border-radius: 4px;
+      border: 1px solid rgba(0, 242, 254, 0.1);
+      pointer-events: none;
+    }
+
+    /* ==========================================================================
+       EXACT ARCS PLACEMENT MAPPING FROM SKETCH
+       Positions each button around the main base trigger using precise coordinates
+       ========================================================================== */
+
+    /* Position 1: Directly Above the Diamond */
+    .menu-item.pos-0 {
+      top: 8px;
+      left: 8px;
+      transform: translate(0, 0);
+    }
+    .fab-menu-wrapper.active .menu-item.pos-0 {
+      opacity: 1;
+      pointer-events: auto;
+      transform: translate(0px, -85px); /* Travels straight up */
+    }
+
+    /* Position 2: Perfectly Diagonal Top-Left */
+    .menu-item.pos-1 {
+      top: 8px;
+      left: 8px;
+      transform: translate(0, 0);
+    }
+    .fab-menu-wrapper.active .menu-item.pos-1 {
+      opacity: 1;
+      pointer-events: auto;
+      transform: translate(-65px, -65px); /* Travels outward at a 45 degree angle */
+    }
+
+    /* Position 3: Directly to the Left */
+    .menu-item.pos-2 {
+      top: 8px;
+      left: 8px;
+      transform: translate(0, 0);
+    }
+    .fab-menu-wrapper.active .menu-item.pos-2 {
+      opacity: 1;
+      pointer-events: auto;
+      transform: translate(-85px, 0px); /* Travels straight leftward */
     }
   </style>
 </head>
@@ -185,70 +211,77 @@
     <p>Let's create something together. Drop a message or find my connections.</p>
   </div>
 
-  <div class="fab-container" id="fabContainer">
-    <div class="menu-items" id="menuItemsContainer">
-      </div>
+  <div class="fab-menu-wrapper" id="menuWrapper">
+    <div id="dynamicItemsContainer"></div>
 
-    <button class="main-fab" id="mainFab">
+    <button class="main-fab" id="mainTrigger">
       <div class="diamond-icon"></div>
     </button>
   </div>
 
   <script>
-    const fabContainer = document.getElementById('fabContainer');
-    const mainFab = document.getElementById('mainFab');
-    const menuItemsContainer = document.getElementById('menuItemsContainer');
+    const menuWrapper = document.getElementById('menuWrapper');
+    const mainTrigger = document.getElementById('mainTrigger');
+    const dynamicItemsContainer = document.getElementById('dynamicItemsContainer');
 
     // System States
     let currentSection = 'home';
     const allSections = ['home', 'team', 'about', 'contact'];
 
-    // Dynamic Options List Renderer
-    function renderMenu() {
-      menuItemsContainer.innerHTML = '';
+    // Instantly renders options map into position slots (0, 1, 2)
+    function renderArcMenu() {
+      dynamicItemsContainer.innerHTML = '';
+      
+      let positionIndex = 0;
       
       allSections.forEach(section => {
+        // Skip current viewport active section completely
         if (section === currentSection) return;
 
         const displayLabel = section.charAt(0).toUpperCase() + section.slice(1);
 
-        const itemWrapper = document.createElement('div');
-        itemWrapper.className = 'menu-item-wrapper';
-        itemWrapper.innerHTML = `
-          <button class="sub-fab"></button>
+        // Build container node with coordinate index class attached
+        const itemDiv = document.createElement('div');
+        itemDiv.className = `menu-item pos-${positionIndex}`;
+        itemDiv.innerHTML = `
           <span class="label">${displayLabel}</span>
+          <button class="sub-fab"></button>
         `;
 
-        itemWrapper.addEventListener('click', () => {
+        // Handle navigation execution transitions
+        itemDiv.addEventListener('click', () => {
           navigateTo(section);
         });
 
-        menuItemsContainer.appendChild(itemWrapper);
+        dynamicItemsContainer.appendChild(itemDiv);
+        positionIndex++;
       });
     }
 
-    // Dynamic Page Transitions
     function navigateTo(targetSectionId) {
       document.getElementById(currentSection).classList.remove('active');
       document.getElementById(targetSectionId).classList.add('active');
       
       currentSection = targetSectionId;
       
-      renderMenu();
-      fabContainer.classList.remove('active');
+      // Rebuild and close
+      renderArcMenu();
+      menuWrapper.classList.remove('active');
     }
 
-    mainFab.addEventListener('click', () => {
-      fabContainer.classList.toggle('active');
+    // Interactive Trigger Toggles
+    mainTrigger.addEventListener('click', () => {
+      menuWrapper.classList.toggle('active');
     });
 
     document.addEventListener('click', (event) => {
-      if (!fabContainer.contains(event.target)) {
-        fabContainer.classList.remove('active');
+      if (!menuWrapper.contains(event.target)) {
+        menuWrapper.classList.remove('active');
       }
     });
 
-    renderMenu();
+    // Run setup
+    renderArcMenu();
   </script>
 </body>
 </html>
