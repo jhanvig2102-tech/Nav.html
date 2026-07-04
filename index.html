@@ -3,123 +3,196 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>My Portfolio</title>
+  <title>Premium Portfolio</title>
   <style>
-    /* Container positioned at the bottom right */
+    /* Reset & Base Styling using the new palette */
+    body {
+      margin: 0;
+      padding: 0;
+      background-color: #191E29; /* Dark Charcoal/Navy */
+      color: #FFFFFF;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+      overflow: hidden; /* Prevents raw scrolling to make it web-app style */
+    }
+
+    /* Content Sections Showcase */
+    .section {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.5s ease, transform 0.5s ease;
+      transform: scale(0.95);
+      padding: 20px;
+      box-sizing: border-box;
+    }
+
+    .section.active {
+      opacity: 1;
+      pointer-events: auto;
+      transform: scale(1);
+    }
+
+    h1 {
+      font-size: 2.5rem;
+      margin-bottom: 10px;
+      color: #00f2fe; /* Custom Tech Cyan */
+    }
+
+    .section p {
+      color: #696E79; /* Slate Gray */
+      font-size: 1.1rem;
+      text-align: center;
+      max-width: 400px;
+    }
+
+    /* Floating Navigation Container */
     .fab-container {
       position: fixed;
-      bottom: 30px;
-      right: 30px;
+      bottom: 35px;
+      right: 25px;
       display: flex;
       flex-direction: column-reverse;
       align-items: flex-end;
-      gap: 15px;
-      font-family: sans-serif;
+      gap: 20px;
       z-index: 1000;
     }
 
-    /* Main FAB Button styling */
+    /* Main Action Button */
     .main-fab {
-      width: 60px;
-      height: 60px;
+      width: 65px;
+      height: 65px;
       border-radius: 50%;
-      background-color: #333;
-      border: 2px solid #333;
+      background: #132D46; /* Deep Blue-Navy */
+      border: 2px solid #00f2fe; /* Cyan Border accent */
       display: flex;
       justify-content: center;
       align-items: center;
       cursor: pointer;
-      box-shadow: 0 4px 10px rgba(0,0,0,0.3);
-      transition: transform 0.2s cubic-bezier(0.175, 0.885, 0.32, 1.275); /* Smooth pop transition */
+      box-shadow: 0 8px 32px rgba(0, 242, 254, 0.15);
+      transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
     }
 
-    /* Enlarges very slightly and rotates when the menu is active */
-    .fab-container.active .main-fab {
-      transform: scale(1.08) rotate(90deg); 
-    }
-
-    /* The diamond inside the main button */
+    /* Diamond Icon */
     .diamond-icon {
-      width: 18px;
-      height: 18px;
-      border: 2px solid #fff;
+      width: 14px;
+      height: 14px;
+      border: 2.5px solid #00f2fe;
       transform: rotate(45deg);
+      transition: transform 0.4s ease;
     }
 
-    /* Sub-menu items container */
+    /* Active State Scaling */
+    .fab-container.active .main-fab {
+      transform: scale(1.05);
+      background-color: #1a3b5c;
+    }
+
+    .fab-container.active .diamond-icon {
+      transform: rotate(135deg);
+    }
+
+    /* Sub-menu Dynamic Stack */
     .menu-items {
       display: flex;
       flex-direction: column-reverse;
       align-items: flex-end;
-      gap: 15px;
+      gap: 16px;
     }
 
-    /* Alignment wrapper for text + circle */
+    /* Wrapper for custom text pill + circle */
     .menu-item-wrapper {
       display: flex;
       align-items: center;
-      gap: 10px;
+      gap: 14px;
       opacity: 0;
       pointer-events: none;
-      transform: translateY(15px);
-      /* Smooth cubic-bezier transition for elements sliding up */
-      transition: opacity 0.3s ease, transform 0.3s cubic-bezier(0.165, 0.84, 0.44, 1);
+      transform: translateY(25px) scale(0.85);
+      transition: opacity 0.4s cubic-bezier(0.165, 0.84, 0.44, 1), 
+                  transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
     }
 
-    /* The Magic Stagger: Adds a tiny delay to each item sequentially */
-    .fab-container.active .menu-items .menu-item-wrapper:nth-child(1) {
-      transition-delay: 0.05s; /* First item pops up almost instantly */
-    }
-    .fab-container.active .menu-items .menu-item-wrapper:nth-child(2) {
-      transition-delay: 0.12s; /* Second item follows quickly */
-    }
-    .fab-container.active .menu-items .menu-item-wrapper:nth-child(3) {
-      transition-delay: 0.19s; /* Third item follows last */
-    }
+    /* Stagger entries sequentially */
+    .fab-container.active .menu-items .menu-item-wrapper:nth-child(1) { transition-delay: 0.04s; }
+    .fab-container.active .menu-items .menu-item-wrapper:nth-child(2) { transition-delay: 0.10s; }
+    .fab-container.active .menu-items .menu-item-wrapper:nth-child(3) { transition-delay: 0.16s; }
 
-    /* When active, make them visible and slide into place */
     .fab-container.active .menu-item-wrapper {
       opacity: 1;
       pointer-events: auto;
-      transform: translateY(0);
+      transform: translateY(0) scale(1);
     }
 
-    /* Text labels from your drawing */
+    /* Premium Sleek Floating Label */
     .label {
       font-size: 14px;
-      color: #555;
-      font-weight: bold;
+      color: #FFFFFF;
+      font-weight: 600;
+      background: #132D46; /* Matching Swissborg container */
+      padding: 8px 16px;
+      border-radius: 100px;
+      border: 1px solid rgba(0, 242, 254, 0.2);
+      white-space: nowrap;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.3);
     }
 
-    /* The smaller circular menu buttons */
+    /* Sub circular buttons styling */
     .sub-fab {
-      width: 45px;
-      height: 45px;
+      width: 48px;
+      height: 48px;
       border-radius: 50%;
-      background-color: #fff;
-      border: 2px solid #333;
+      background-color: #132D46;
+      border: 1px solid rgba(0, 242, 254, 0.3);
       cursor: pointer;
-      box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+      box-shadow: 0 4px 14px rgba(0,0,0,0.4);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    /* Glowing cyan core indicator inside sub-menus */
+    .sub-fab::after {
+      content: '';
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background-color: #00f2fe;
+      box-shadow: 0 0 8px #00f2fe;
     }
   </style>
 </head>
 <body>
 
+  <div id="home" class="section active">
+    <h1>Welcome Home</h1>
+    <p>This is your main portfolio dashboard view. Tap the menu below to travel to other sections.</p>
+  </div>
+
+  <div id="team" class="section">
+    <h1>Our Team</h1>
+    <p>Collaborators and masterminds building exceptional tech experiences.</p>
+  </div>
+
+  <div id="about" class="section">
+    <h1>About Me</h1>
+    <p>Designing interfaces that blend clean logic with artistic layout execution.</p>
+  </div>
+
+  <div id="contact" class="section">
+    <h1>Contact</h1>
+    <p>Let's create something together. Drop a message or find my connections.</p>
+  </div>
+
   <div class="fab-container" id="fabContainer">
-    <div class="menu-items">
-      <div class="menu-item-wrapper">
-        <span class="label">Project 1</span>
-        <button class="sub-fab"></button>
+    <div class="menu-items" id="menuItemsContainer">
       </div>
-      <div class="menu-item-wrapper">
-        <span class="label">Project 2</span>
-        <button class="sub-fab"></button>
-      </div>
-      <div class="menu-item-wrapper">
-        <span class="label">About Me</span>
-        <button class="sub-fab"></button>
-      </div>
-    </div>
 
     <button class="main-fab" id="mainFab">
       <div class="diamond-icon"></div>
@@ -129,18 +202,64 @@
   <script>
     const fabContainer = document.getElementById('fabContainer');
     const mainFab = document.getElementById('mainFab');
+    const menuItemsContainer = document.getElementById('menuItemsContainer');
 
-    // Toggle the active class on click/tap
+    // System State Tracker
+    let currentSection = 'home';
+    const allSections = ['home', 'team', 'about', 'contact'];
+
+    // Generate Dynamic Navigation Menu options list based on active screen
+    function renderMenu() {
+      menuItemsContainer.innerHTML = '';
+      
+      allSections.forEach(section => {
+        // Skip rendering the screen we are already sitting on!
+        if (section === currentSection) return;
+
+        // Clean up title display text
+        const displayLabel = section.charAt(0).toUpperCase() + section.slice(1);
+
+        const itemWrapper = document.createElement('div');
+        itemWrapper.className = 'menu-item-wrapper';
+        itemWrapper.innerHTML = `
+          <span class="label">${displayLabel}</span>
+          <button class="sub-fab"></button>
+        `;
+
+        // Handle the live page transitions smoothly
+        itemWrapper.addEventListener('click', () => {
+          navigateTo(section);
+        });
+
+        menuItemsContainer.appendChild(itemWrapper);
+      });
+    }
+
+    // Handle switching page screens and layout transitions
+    function navigateTo(targetSectionId) {
+      document.getElementById(currentSection).classList.remove('active');
+      document.getElementById(targetSectionId).classList.add('active');
+      
+      currentSection = targetSectionId;
+      
+      // Instantly rebuild the navigation array options
+      renderMenu();
+      fabContainer.classList.remove('active');
+    }
+
+    // Toggle expansion panel controls
     mainFab.addEventListener('click', () => {
       fabContainer.classList.toggle('active');
     });
 
-    // Close the menu if clicked anywhere else on the screen
     document.addEventListener('click', (event) => {
       if (!fabContainer.contains(event.target)) {
         fabContainer.classList.remove('active');
       }
     });
+
+    // Initial load presentation setup
+    renderMenu();
   </script>
 </body>
 </html>
