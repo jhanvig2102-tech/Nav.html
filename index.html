@@ -53,7 +53,7 @@
       max-width: 400px;
     }
 
-    /* Fixed Corner Container */
+    /* Fixed Corner Container - Sized to match the main button exactly */
     .fab-menu-wrapper {
       position: fixed;
       bottom: 30px;
@@ -66,8 +66,8 @@
     /* Main Toggle Trigger Button */
     .main-fab {
       position: absolute;
-      top: 0;
-      left: 0;
+      bottom: 0;
+      right: 0;
       width: 65px;
       height: 65px;
       border-radius: 50%;
@@ -77,7 +77,7 @@
       justify-content: center;
       align-items: center;
       cursor: pointer;
-      box-shadow: 0 8px 32px rgba(0, 242, 254, 0.2);
+      box-shadow: 0 8px 32px rgba(0, 242, 254, 0.3);
       z-index: 1010;
       box-sizing: border-box;
     }
@@ -95,16 +95,16 @@
       transform: rotate(135deg);
     }
 
-    /* Sub Navigation Option Wrapper Setup */
+    /* Base setup for sub-navigation items - Hidden inside main button until clicked */
     .menu-item {
       position: absolute;
-      top: 7px; /* Centered inside the 65px main container */
-      left: 7px;
+      bottom: 7px; /* Perfectly aligns inside the 65px button footprint */
+      right: 7px;
       width: 50px;
       height: 50px;
       opacity: 0;
       pointer-events: none;
-      transition: opacity 0.3s ease, transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+      transition: opacity 0.3s ease, transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.2) !important;
       z-index: 1001;
     }
 
@@ -113,14 +113,16 @@
       width: 50px;
       height: 50px;
       border-radius: 50%;
-      background-color: #132D46;
-      border: 1px solid rgba(0, 242, 254, 0.4);
+      background-color: #132D46; /* Deep Blue-Navy */
+      border: 1px solid rgba(0, 242, 254, 0.5);
       cursor: pointer;
       box-shadow: 0 4px 14px rgba(0,0,0,0.4);
       display: flex;
       justify-content: center;
       align-items: center;
       box-sizing: border-box;
+      padding: 0;
+      margin: 0;
     }
 
     .sub-fab::after {
@@ -132,10 +134,10 @@
       box-shadow: 0 0 8px #00f2fe;
     }
 
-    /* Minimal Floating Text Labels */
+    /* Clean Floating Labels positioned safely to the LEFT of each button */
     .label {
       position: absolute;
-      right: 60px; /* Aligned to the left of each individual circle button */
+      right: 62px; 
       top: 50%;
       transform: translateY(-50%);
       font-size: 11px;
@@ -153,28 +155,28 @@
     }
 
     /* ==========================================================================
-       HARDCODED SKETCH COORDINATES MAP
+       FIXED ARC POSITIONING FROM YOUR EXCALIDRAW SKETCH
        ========================================================================== */
 
-    /* Item 1: Shoots Straight UP */
+    /* Item 0: Goes Straight UP */
     .fab-menu-wrapper.active #item0 {
       opacity: 1;
       pointer-events: auto;
-      transform: translate(0px, -85px);
+      transform: translate(0px, -85px); /* Clear vertical separation */
     }
 
-    /* Item 2: Shoots DIAGONALLY Top-Left */
+    /* Item 1: Goes DIAGONALLY Up-Left */
     .fab-menu-wrapper.active #item1 {
       opacity: 1;
       pointer-events: auto;
-      transform: translate(-70px, -70px);
+      transform: translate(-75px, -75px); /* Balanced diagonal offset */
     }
 
-    /* Item 3: Shoots Straight LEFT */
+    /* Item 2: Goes Straight LEFT */
     .fab-menu-wrapper.active #item2 {
       opacity: 1;
       pointer-events: auto;
-      transform: translate(-85px, 0px);
+      transform: translate(-95px, 0px); /* Deep side breakout layout */
     }
   </style>
 </head>
@@ -229,27 +231,25 @@
     let currentSection = 'home';
     const allSections = ['home', 'team', 'about', 'contact'];
 
-    // Update button text and execution routes on the fly without breaking structural CSS
+    // Map structural values dynamically without touching position states
     function updateMenuLabels() {
-      // Find which 3 sections are NOT active right now
       const inactiveSections = allSections.filter(s => s !== currentSection);
 
-      // Map those sections directly to our 3 hardcoded buttons
       inactiveSections.forEach((sectionName, index) => {
         const labelEl = document.getElementById(`label${index}`);
         const btnEl = document.getElementById(`btn${index}`);
         
-        // Update display text inside label pill
-        labelEl.textContent = sectionName.charAt(0).toUpperCase() + sectionName.slice(1);
-        
-        // Clean off previous navigation click routes completely
-        const newBtn = btnEl.cloneNode(true);
-        btnEl.parentNode.replaceChild(newBtn, btnEl);
-        
-        // Bind the fresh layout link destination
-        newBtn.addEventListener('click', () => {
-          navigateTo(sectionName);
-        });
+        if (labelEl && btnEl) {
+          labelEl.textContent = sectionName.charAt(0).toUpperCase() + sectionName.slice(1);
+          
+          const newBtn = btnEl.cloneNode(true);
+          btnEl.parentNode.replaceChild(newBtn, btnEl);
+          
+          newBtn.addEventListener('click', (e) => {
+            e.stopPropagation();
+            navigateTo(sectionName);
+          });
+        }
       });
     }
 
@@ -263,7 +263,8 @@
       menuWrapper.classList.remove('active');
     }
 
-    mainTrigger.addEventListener('click', () => {
+    mainTrigger.addEventListener('click', (e) => {
+      e.stopPropagation();
       menuWrapper.classList.toggle('active');
     });
 
@@ -273,7 +274,7 @@
       }
     });
 
-    // Run initial configuration map
+    // Run layout configuration
     updateMenuLabels();
   </script>
 </body>
