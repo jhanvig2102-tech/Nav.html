@@ -53,7 +53,7 @@
       max-width: 400px;
     }
 
-    /* Sketch Corner Anchor: Keeps navigation perfectly fixed at the bottom right */
+    /* Sketch Corner Anchor */
     .fab-menu-wrapper {
       position: fixed;
       bottom: 30px;
@@ -98,8 +98,10 @@
     /* Sub Navigation Option Wrapper Setup */
     .menu-item {
       position: absolute;
-      display: flex;
-      align-items: center;
+      top: 7px; /* Center perfectly relative to 65px main button */
+      left: 7px;
+      width: 50px;
+      height: 50px;
       opacity: 0;
       pointer-events: none;
       transition: opacity 0.3s ease, transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
@@ -133,59 +135,46 @@
     /* Minimal Floating Horizontal Text Labels */
     .label {
       position: absolute;
-      right: 60px; /* Positions text neatly to the left side of its respective button */
+      right: 60px; /* Positions text cleanly to the left side of its respective button */
+      top: 50%;
+      transform: translateY(-50%);
       font-size: 11px;
-      color: #696E79; /* Clean secondary slate color */
+      color: #FFFFFF; 
       font-weight: 700;
       text-transform: uppercase;
       letter-spacing: 0.05em;
       white-space: nowrap;
-      background: rgba(19, 45, 70, 0.9);
-      padding: 4px 10px;
-      border-radius: 4px;
-      border: 1px solid rgba(0, 242, 254, 0.1);
+      background: rgba(19, 45, 70, 0.95);
+      padding: 6px 12px;
+      border-radius: 6px;
+      border: 1px solid rgba(0, 242, 254, 0.2);
       pointer-events: none;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.3);
     }
 
     /* ==========================================================================
        EXACT ARCS PLACEMENT MAPPING FROM SKETCH
-       Positions each button around the main base trigger using precise coordinates
        ========================================================================== */
 
     /* Position 1: Directly Above the Diamond */
-    .menu-item.pos-0 {
-      top: 8px;
-      left: 8px;
-      transform: translate(0, 0);
-    }
     .fab-menu-wrapper.active .menu-item.pos-0 {
       opacity: 1;
       pointer-events: auto;
-      transform: translate(0px, -85px); /* Travels straight up */
+      transform: translate(0px, -85px); /* Straight up */
     }
 
     /* Position 2: Perfectly Diagonal Top-Left */
-    .menu-item.pos-1 {
-      top: 8px;
-      left: 8px;
-      transform: translate(0, 0);
-    }
     .fab-menu-wrapper.active .menu-item.pos-1 {
       opacity: 1;
       pointer-events: auto;
-      transform: translate(-65px, -65px); /* Travels outward at a 45 degree angle */
+      transform: translate(-70px, -70px); /* 45 degree angle */
     }
 
     /* Position 3: Directly to the Left */
-    .menu-item.pos-2 {
-      top: 8px;
-      left: 8px;
-      transform: translate(0, 0);
-    }
     .fab-menu-wrapper.active .menu-item.pos-2 {
       opacity: 1;
       pointer-events: auto;
-      transform: translate(-85px, 0px); /* Travels straight leftward */
+      transform: translate(-85px, 0px); /* Straight left */
     }
   </style>
 </head>
@@ -224,23 +213,18 @@
     const mainTrigger = document.getElementById('mainTrigger');
     const dynamicItemsContainer = document.getElementById('dynamicItemsContainer');
 
-    // System States
     let currentSection = 'home';
     const allSections = ['home', 'team', 'about', 'contact'];
 
-    // Instantly renders options map into position slots (0, 1, 2)
     function renderArcMenu() {
       dynamicItemsContainer.innerHTML = '';
-      
       let positionIndex = 0;
       
       allSections.forEach(section => {
-        // Skip current viewport active section completely
         if (section === currentSection) return;
 
         const displayLabel = section.charAt(0).toUpperCase() + section.slice(1);
 
-        // Build container node with coordinate index class attached
         const itemDiv = document.createElement('div');
         itemDiv.className = `menu-item pos-${positionIndex}`;
         itemDiv.innerHTML = `
@@ -248,7 +232,6 @@
           <button class="sub-fab"></button>
         `;
 
-        // Handle navigation execution transitions
         itemDiv.addEventListener('click', () => {
           navigateTo(section);
         });
@@ -264,12 +247,10 @@
       
       currentSection = targetSectionId;
       
-      // Rebuild and close
       renderArcMenu();
       menuWrapper.classList.remove('active');
     }
 
-    // Interactive Trigger Toggles
     mainTrigger.addEventListener('click', () => {
       menuWrapper.classList.toggle('active');
     });
@@ -280,7 +261,6 @@
       }
     });
 
-    // Run setup
     renderArcMenu();
   </script>
 </body>
