@@ -53,11 +53,11 @@
       max-width: 400px;
     }
 
-    /* Fixed Corner Anchor Container */
+    /* Fixed Corner Container Frame */
     .fab-menu-wrapper {
       position: fixed;
-      bottom: 35px;
-      right: 35px;
+      bottom: 40px;
+      right: 40px;
       width: 65px;
       height: 65px;
       z-index: 1000;
@@ -66,8 +66,8 @@
     /* Main Toggle Trigger Button */
     .main-fab {
       position: absolute;
-      top: 0;
-      left: 0;
+      bottom: 0;
+      right: 0;
       width: 65px;
       height: 65px;
       border-radius: 50%;
@@ -77,7 +77,7 @@
       justify-content: center;
       align-items: center;
       cursor: pointer;
-      box-shadow: 0 8px 32px rgba(0, 242, 254, 0.3);
+      box-shadow: 0 8px 32px rgba(0, 242, 254, 0.35);
       z-index: 1010;
       box-sizing: border-box;
     }
@@ -95,16 +95,22 @@
       transform: rotate(135deg);
     }
 
-    /* Sub Navigation Option Wrapper Setup */
+    /* Sub Navigation Item Wrappers 
+       Stacked precisely over the main trigger button origin.
+       Uses a column flexbox so the text always positions itself straight down below the circle.
+    */
     .menu-item {
       position: absolute;
-      top: 7px; 
-      left: 7px;
+      bottom: 7px; 
+      right: 7px;
       width: 50px;
-      height: 50px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
       opacity: 0;
       pointer-events: none;
-      transition: opacity 0.35s ease, transform 0.45s cubic-bezier(0.175, 0.885, 0.32, 1.2);
+      transition: opacity 0.35s ease, transform 0.45s cubic-bezier(0.175, 0.885, 0.32, 1.25);
       z-index: 1001;
     }
 
@@ -122,7 +128,7 @@
       align-items: center;
       box-sizing: border-box;
       padding: 0;
-      position: relative;
+      margin: 0;
     }
 
     .sub-fab::after {
@@ -134,72 +140,42 @@
       box-shadow: 0 0 8px #00f2fe;
     }
 
-    /* ==========================================================================
-       NEW CLEAN TEXT FORMATTING (NO MORE BOXES)
-       ========================================================================== */
+    /* Minimal Text Labels positioned directly below the circle button */
     .label {
-      position: absolute;
-      font-size: 12px;
+      font-size: 11px;
       color: #FFFFFF; 
-      font-weight: 600;
+      font-weight: 700;
       text-transform: uppercase;
       letter-spacing: 0.08em;
       white-space: nowrap;
       pointer-events: none;
-      opacity: 0;
-      transition: opacity 0.3s ease;
-      text-shadow: 0 2px 4px rgba(0, 0, 0, 0.8); /* Ensures ultra-crisp readability */
-    }
-
-    /* Reveal labels cleanly when menu opens */
-    .fab-menu-wrapper.active .label {
-      opacity: 1;
-    }
-
-    /* Label 0 (Top Button): Positioned cleanly directly BELOW or LEFT of the circle */
-    #item0 .label {
-      right: 60px;
-      top: 50%;
-      transform: translateY(-50%);
-    }
-
-    /* Label 1 (Diagonal Button): Balanced corner text spacing */
-    #item1 .label {
-      right: 60px;
-      top: 50%;
-      transform: translateY(-50%);
-    }
-
-    /* Label 2 (Left Button): Positioned cleanly directly ABOVE the circle */
-    #item2 .label {
-      left: 50%;
-      transform: translateX(-50%);
-      bottom: 60px;
+      margin-top: 8px; /* Clean gap below the button footprint */
+      text-shadow: 0 2px 4px rgba(0, 0, 0, 0.8);
     }
 
     /* ==========================================================================
-       INCREASED UNIFORM SPACE DISTRIBUTION
+       PERFECTLY SPACED GEOMETRIC BREAKOUT ARC
        ========================================================================== */
 
-    /* Item 0: Goes Straight UP */
+    /* Item 0: Positioned at the top of the arc layout */
     .fab-menu-wrapper.active #item0 {
       opacity: 1;
       pointer-events: auto;
-      transform: translate(0px, -100px);
+      transform: translate(0px, -135px);
     }
 
-    /* Item 1: Exactly Diagonal Top-Left */
+    /* Item 1: Positioned symmetrically in the center corner of the arc */
     .fab-menu-wrapper.active #item1 {
       opacity: 1;
       pointer-events: auto;
-      transform: translate(-80px, -80px);
+      transform: translate(-95px, -95px);
     }
 
-    /* Item 2: Directly Left of the Diamond Button */
+    /* Item 2: Positioned at the leftmost baseline of the arc layout */
     .fab-menu-wrapper.active #item2 {
       opacity: 1;
       pointer-events: auto;
-      transform: translate(-100px, 0px);
+      transform: translate(-135px, 0px);
     }
   </style>
 </head>
@@ -228,18 +204,18 @@
   <div class="fab-menu-wrapper" id="menuWrapper">
     
     <div class="menu-item" id="item0">
-      <span class="label" id="label0">Team</span>
       <button class="sub-fab" id="btn0"></button>
+      <span class="label" id="label0">Team</span>
     </div>
 
     <div class="menu-item" id="item1">
-      <span class="label" id="label1">About</span>
       <button class="sub-fab" id="btn1"></button>
+      <span class="label" id="label1">About</span>
     </div>
 
     <div class="menu-item" id="item2">
-      <span class="label" id="label2">Contact</span>
       <button class="sub-fab" id="btn2"></button>
+      <span class="label" id="label2">Contact</span>
     </div>
 
     <button class="main-fab" id="mainTrigger">
