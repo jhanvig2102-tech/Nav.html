@@ -56,8 +56,8 @@
     /* Fixed Corner Anchor Container */
     .fab-menu-wrapper {
       position: fixed;
-      bottom: 30px;
-      right: 30px;
+      bottom: 35px;
+      right: 35px;
       width: 65px;
       height: 65px;
       z-index: 1000;
@@ -95,7 +95,7 @@
       transform: rotate(135deg);
     }
 
-    /* Sub Navigation Option Wrapper Setup - Stacked identically at origin */
+    /* Sub Navigation Option Wrapper Setup */
     .menu-item {
       position: absolute;
       top: 7px; 
@@ -104,11 +104,8 @@
       height: 50px;
       opacity: 0;
       pointer-events: none;
-      transition: opacity 0.3s ease, transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.2);
+      transition: opacity 0.35s ease, transform 0.45s cubic-bezier(0.175, 0.885, 0.32, 1.2);
       z-index: 1001;
-      display: flex;
-      align-items: center;
-      justify-content: center;
     }
 
     /* Circular Navigation Buttons */
@@ -125,6 +122,7 @@
       align-items: center;
       box-sizing: border-box;
       padding: 0;
+      position: relative;
     }
 
     .sub-fab::after {
@@ -136,49 +134,72 @@
       box-shadow: 0 0 8px #00f2fe;
     }
 
-    /* Minimal Floating Text Labels - Fixed distance from their specific circle button */
+    /* ==========================================================================
+       NEW CLEAN TEXT FORMATTING (NO MORE BOXES)
+       ========================================================================== */
     .label {
       position: absolute;
-      right: 65px; 
+      font-size: 12px;
+      color: #FFFFFF; 
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      white-space: nowrap;
+      pointer-events: none;
+      opacity: 0;
+      transition: opacity 0.3s ease;
+      text-shadow: 0 2px 4px rgba(0, 0, 0, 0.8); /* Ensures ultra-crisp readability */
+    }
+
+    /* Reveal labels cleanly when menu opens */
+    .fab-menu-wrapper.active .label {
+      opacity: 1;
+    }
+
+    /* Label 0 (Top Button): Positioned cleanly directly BELOW or LEFT of the circle */
+    #item0 .label {
+      right: 60px;
       top: 50%;
       transform: translateY(-50%);
-      font-size: 11px;
-      color: #FFFFFF; 
-      font-weight: 700;
-      text-transform: uppercase;
-      letter-spacing: 0.05em;
-      white-space: nowrap;
-      background: rgba(19, 45, 70, 0.95);
-      padding: 6px 12px;
-      border-radius: 6px;
-      border: 1px solid rgba(0, 242, 254, 0.2);
-      pointer-events: none;
-      box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+    }
+
+    /* Label 1 (Diagonal Button): Balanced corner text spacing */
+    #item1 .label {
+      right: 60px;
+      top: 50%;
+      transform: translateY(-50%);
+    }
+
+    /* Label 2 (Left Button): Positioned cleanly directly ABOVE the circle */
+    #item2 .label {
+      left: 50%;
+      transform: translateX(-50%);
+      bottom: 60px;
     }
 
     /* ==========================================================================
-       STRICT TRANSFORMS ACCORDING TO THE SKETCH COORDINATES MAP
+       INCREASED UNIFORM SPACE DISTRIBUTION
        ========================================================================== */
 
-    /* Item 0: Directly Above the Diamond Button */
+    /* Item 0: Goes Straight UP */
     .fab-menu-wrapper.active #item0 {
       opacity: 1;
       pointer-events: auto;
-      transform: translate(0px, -90px);
+      transform: translate(0px, -100px);
     }
 
     /* Item 1: Exactly Diagonal Top-Left */
     .fab-menu-wrapper.active #item1 {
       opacity: 1;
       pointer-events: auto;
-      transform: translate(-75px, -75px);
+      transform: translate(-80px, -80px);
     }
 
     /* Item 2: Directly Left of the Diamond Button */
     .fab-menu-wrapper.active #item2 {
       opacity: 1;
       pointer-events: auto;
-      transform: translate(-90px, 0px);
+      transform: translate(-100px, 0px);
     }
   </style>
 </head>
