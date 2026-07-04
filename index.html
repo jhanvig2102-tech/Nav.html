@@ -9,7 +9,7 @@
     body {
       margin: 0;
       padding: 0;
-      background-color: #191E29; 
+      background-color: #191E29; /* Swissborg Dark Charcoal */
       color: #FFFFFF;
       font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
       overflow: hidden;
@@ -43,50 +43,50 @@
     h1 {
       font-size: 2.5rem;
       margin-bottom: 10px;
-      color: #00f2fe; 
+      color: #00f2fe; /* Tech Cyan */
     }
 
     .section p {
-      color: #696E79; 
+      color: #696E79; /* Swissborg Slate Gray */
       font-size: 1.1rem;
       text-align: center;
       max-width: 400px;
     }
 
-    /* Fixed Corner Container Frame - Scaled up base area */
+    /* Fixed Corner Container Frame */
     .fab-menu-wrapper {
       position: fixed;
       bottom: 40px;
       right: 40px;
-      width: 76px;
-      height: 76px;
+      width: 65px;
+      height: 65px;
       z-index: 1000;
     }
 
-    /* Main Toggle Trigger Button - Expanded for a more intentional anchor */
+    /* Main Toggle Trigger Button (Reverted to 65px) */
     .main-fab {
       position: absolute;
       bottom: 0;
       right: 0;
-      width: 76px;
-      height: 76px;
+      width: 65px;
+      height: 65px;
       border-radius: 50%;
-      background: #132D46; 
-      border: 2.5px solid #00f2fe;
+      background: #132D46; /* Deep Blue-Navy */
+      border: 2px solid #00f2fe;
       display: flex;
       justify-content: center;
       align-items: center;
       cursor: pointer;
-      box-shadow: 0 10px 36px rgba(0, 242, 254, 0.35);
+      box-shadow: 0 8px 32px rgba(0, 242, 254, 0.35);
       z-index: 1010;
       box-sizing: border-box;
     }
 
-    /* Diamond Central Icon - Scaled to match the bigger button */
+    /* Diamond Central Icon */
     .diamond-icon {
-      width: 18px;
-      height: 18px;
-      border: 3px solid #00f2fe;
+      width: 14px;
+      height: 14px;
+      border: 2.5px solid #00f2fe;
       transform: rotate(45deg);
       transition: transform 0.4s ease;
     }
@@ -95,12 +95,12 @@
       transform: rotate(135deg);
     }
 
-    /* Sub Navigation Item Wrappers - Centered over origin point */
+    /* Sub Navigation Item Wrappers */
     .menu-item {
       position: absolute;
       bottom: 7px; 
       right: 7px;
-      width: 62px;
+      width: 50px;
       display: flex;
       flex-direction: column;
       align-items: center;
@@ -111,15 +111,15 @@
       z-index: 1001;
     }
 
-    /* Circular Navigation Buttons - Upscaled for premium touch layout */
+    /* Circular Navigation Buttons (Reverted to 50px) */
     .sub-fab {
-      width: 62px;
-      height: 62px;
+      width: 50px;
+      height: 50px;
       border-radius: 50%;
       background-color: #132D46; /* Deep Blue-Navy */
-      border: 1.5px solid rgba(0, 242, 254, 0.5);
+      border: 1px solid rgba(0, 242, 254, 0.5);
       cursor: pointer;
-      box-shadow: 0 6px 18px rgba(0,0,0,0.45);
+      box-shadow: 0 4px 14px rgba(0,0,0,0.4);
       display: flex;
       justify-content: center;
       align-items: center;
@@ -130,45 +130,49 @@
 
     .sub-fab::after {
       content: '';
-      width: 10px;
-      height: 10px;
+      width: 8px;
+      height: 8px;
       border-radius: 50%;
       background-color: #00f2fe;
-      box-shadow: 0 0 10px #00f2fe;
+      box-shadow: 0 0 8px #00f2fe;
     }
 
-    /* Minimal Text Labels - Set cleanly below the upscaled circles */
+    /* Minimal Text Labels */
     .label {
-      font-size: 12px;
+      font-size: 11px;
       color: #FFFFFF; 
       font-weight: 700;
       text-transform: uppercase;
       letter-spacing: 0.08em;
       white-space: nowrap;
       pointer-events: none;
-      margin-top: 10px; /* Adjusted gap for the new scale */
-      text-shadow: 0 2px 5px rgba(0, 0, 0, 0.9);
+      margin-top: 8px;
+      text-shadow: 0 2px 4px rgba(0, 0, 0, 0.8);
     }
 
-    /* Item 0: Symmetrical top position */
+    /* ==========================================================================
+       LESSENED DISTANCE BREAKOUT ARC COORDINATES
+       ========================================================================== */
+
+    /* Item 0: Positioned tightly above the main circle */
     .fab-menu-wrapper.active #item0 {
       opacity: 1;
       pointer-events: auto;
-      transform: translate(0px, -155px); /* Increased throw distance for larger icons */
+      transform: translate(0px, -115px); /* Reduced from -155px */
     }
 
-    /* Item 1: Symmetrical true diagonal corner position */
+    /* Item 1: Positioned tightly on the true diagonal */
     .fab-menu-wrapper.active #item1 {
       opacity: 1;
       pointer-events: auto;
-      transform: translate(-110px, -110px);
+      transform: translate(-82px, -82px); /* Reduced from -110px */
     }
 
-    /* Item 2: Symmetrical baseline left position */
+    /* Item 2: Positioned tightly to the left side */
     .fab-menu-wrapper.active #item2 {
       opacity: 1;
       pointer-events: auto;
-      transform: translate(-155px, 0px);
+      transform: translate(-115px, 0px); /* Reduced from -155px */
     }
   </style>
 </head>
