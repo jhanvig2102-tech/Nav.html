@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>My Portfolio</title>
+  <style>
+    /* Container positioned at the bottom right */
+    .fab-container {
+      position: fixed;
+      bottom: 30px;
+      right: 30px;
+      display: flex;
+      flex-direction: column-reverse;
+      align-items: flex-end;
+      gap: 15px;
+      font-family: sans-serif;
+      z-index: 1000;
+    }
+
+    /* Main FAB Button styling */
+    .main-fab {
+      width: 60px;
+      height: 60px;
+      border-radius: 50%;
+      background-color: #333;
+      border: 2px solid #333;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      cursor: pointer;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+      transition: transform 0.2s cubic-bezier(0.175, 0.885, 0.32, 1.275); /* Smooth pop transition */
+    }
+
+    /* Enlarges very slightly and rotates when the menu is active */
+    .fab-container.active .main-fab {
+      transform: scale(1.08) rotate(90deg); 
+    }
+
+    /* The diamond inside the main button */
+    .diamond-icon {
+      width: 18px;
+      height: 18px;
+      border: 2px solid #fff;
+      transform: rotate(45deg);
+    }
+
+    /* Sub-menu items container */
+    .menu-items {
+      display: flex;
+      flex-direction: column-reverse;
+      align-items: flex-end;
+      gap: 15px;
+    }
+
+    /* Alignment wrapper for text + circle */
+    .menu-item-wrapper {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      opacity: 0;
+      pointer-events: none;
+      transform: translateY(15px);
+      /* Smooth cubic-bezier transition for elements sliding up */
+      transition: opacity 0.3s ease, transform 0.3s cubic-bezier(0.165, 0.84, 0.44, 1);
+    }
+
+    /* The Magic Stagger: Adds a tiny delay to each item sequentially */
+    .fab-container.active .menu-items .menu-item-wrapper:nth-child(1) {
+      transition-delay: 0.05s; /* First item pops up almost instantly */
+    }
+    .fab-container.active .menu-items .menu-item-wrapper:nth-child(2) {
+      transition-delay: 0.12s; /* Second item follows quickly */
+    }
+    .fab-container.active .menu-items .menu-item-wrapper:nth-child(3) {
+      transition-delay: 0.19s; /* Third item follows last */
+    }
+
+    /* When active, make them visible and slide into place */
+    .fab-container.active .menu-item-wrapper {
+      opacity: 1;
+      pointer-events: auto;
+      transform: translateY(0);
+    }
+
+    /* Text labels from your drawing */
+    .label {
+      font-size: 14px;
+      color: #555;
+      font-weight: bold;
+    }
+
+    /* The smaller circular menu buttons */
+    .sub-fab {
+      width: 45px;
+      height: 45px;
+      border-radius: 50%;
+      background-color: #fff;
+      border: 2px solid #333;
+      cursor: pointer;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+    }
+  </style>
+</head>
+<body>
+
+  <div class="fab-container" id="fabContainer">
+    <div class="menu-items">
+      <div class="menu-item-wrapper">
+        <span class="label">Project 1</span>
+        <button class="sub-fab"></button>
+      </div>
+      <div class="menu-item-wrapper">
+        <span class="label">Project 2</span>
+        <button class="sub-fab"></button>
+      </div>
+      <div class="menu-item-wrapper">
+        <span class="label">About Me</span>
+        <button class="sub-fab"></button>
+      </div>
+    </div>
+
+    <button class="main-fab" id="mainFab">
+      <div class="diamond-icon"></div>
+    </button>
+  </div>
+
+  <script>
+    const fabContainer = document.getElementById('fabContainer');
+    const mainFab = document.getElementById('mainFab');
+
+    // Toggle the active class on click/tap
+    mainFab.addEventListener('click', () => {
+      fabContainer.classList.toggle('active');
+    });
+
+    // Close the menu if clicked anywhere else on the screen
+    document.addEventListener('click', (event) => {
+      if (!fabContainer.contains(event.target)) {
+        fabContainer.classList.remove('active');
+      }
+    });
+  </script>
+</body>
+</html>
